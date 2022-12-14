@@ -1,0 +1,114 @@
+install django
+----------------------------------
+cmd/ conda create --name MyDjangoEnv django
+cmd/ conda info --envs
+cmd/ activate MyDjangoEnv
+cmd/ conda install django
+----------------------------------
+
+make directory on desktop
+----------------------------------
+mkdir project_one
+active MyDjangoEnv
+django-admin startproject first_project
+cd first_project
+python manage.py runserver
+python manage.py startapp first_app
+----------------------------------
+
+(first_project --> first_project)
+settings.py
+----------------------------------
+INSTALLED_APPS = [
+	"first_app"
+]
+----------------------------------
+
+views.py
+----------------------------------
+from django.shorcuts import render
+from django.http import HttpResponse
+
+def index(request):
+	return HttpResponse("Hello world!") --directly on views--
+	my_dict = {'insert_me':"Hello i am from views.py !"}
+	return render(request,'first_app\index.html',context=my_dict) --from template folder--
+----------------------------------
+
+urls.py
+----------------------------------
+from first_app import views
+
+urlpatterns = [
+	url(r'^$',views.index, name='index'),
+	url(r'^first_app/',include('first_app.urls'))
+]
+----------------------------------
+
+(first_project --> first_app) 
+urls.py
+----------------------------------
+from django.conf.urls import url
+from first_app import views
+
+urlpatterns = [
+	url(r'^$',views.index, name='index')
+]
+----------------------------------
+
+(first_project -> first_project)
+settings.py
+cmd/ cd first_project
+cmd/ python settings.py
+
+----------------------------------
+BASE_DIR = ......................
+
+|step change|
+------------
+print(__file__) --save and run cmd/ python settings.py--
+print(os.path.abspath(__file__) --save and run cmd/ python settings.py--
+print(BASE_DIR) --save and run cmd/ python settings.py--
+print(os.path.join(BASE_DIR,"templates") --save and run cmd/ python settings.py--
+TEMPLATE_DIR = os.path.join(BASE_DIR,"templates") --save and run cmd/ python settings.py--
+STATIC_DIR = os.path.join(BASE_DIR,"static")
+
+TEMPLATES = [{
+	'DIRS': [TEMPLATE_DIR,],
+}]
+
+STATIC_URL = '/static/
+STATICFILES_DIRS = [
+	STATIC_DIR,
+]
+------------
+-------------------------------------
+
+(first_project --> templates --> first_app)
+index.html
+-------------------------------------
+{% load staticfiles %}
+<html>
+{{ insert_me }}
+<img src="(% static "imsges/image.jpg" %)">
+</html>
+-------------------------------------
+
+(first_project --> static --> images)
+image.jpg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
